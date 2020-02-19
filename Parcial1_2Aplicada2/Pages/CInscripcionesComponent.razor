@@ -1,0 +1,81 @@
+﻿@page "/CInscripciones"
+
+
+
+<div class="container">
+
+    <h3 class="display-4 text-center">Consulta de Inscripciones</h3>
+
+    <div>
+
+        @if (Lista.Count == 0)
+        {
+            <div class="text-center">
+                <div class="spinner-border">
+                    <span class="sr-only">Loading....</span>
+                </div>
+            </div>
+
+        }
+        else
+        {
+            <table class="table">
+
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Semestre</th>
+                        <th scope="col">Limite de credito</th>
+                        <th scope="col">Creditos Tomados</th>
+                        <th scope="col">Creditos Disponibles</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+                    @foreach (var obj in Lista)
+                    {
+                        <tr>
+                            <td scope="row">@obj.InscripcionId</td>
+                            <td>@obj.Semestre</td>
+                            <td>@obj.Limite</td>
+                            <td>@obj.Tomados</td>
+                            <td>@obj.Disponibles</td>
+                        </tr>
+                    }
+
+
+                </tbody>
+
+            </table>
+
+        }
+
+
+    </div>
+
+</div>
+
+@code {
+
+
+    public List<Inscripciones> Lista { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Lista = new List<Inscripciones>();
+
+        try
+        {
+            await Task.Run(() => { Lista = InscripcionesController.GetList(A => true); });
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+
+
+    }
+
+}

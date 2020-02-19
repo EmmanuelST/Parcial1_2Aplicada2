@@ -11,6 +11,35 @@ namespace Parcial1_2Aplicada2.Controllers
 {
     public class InscripcionesController
     {
+        public static bool Guardar(Inscripciones entity)
+        {
+            Contexto db = new Contexto();
+            bool paso = false;
+            try
+            {
+                if(db.Inscripciones.Any(A=> A.InscripcionId == entity.InscripcionId))
+                {
+                    paso = Modificar(entity);
+                }
+                else
+                {
+                    paso = Insertar(entity);
+                }
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                db.Dispose();
+            }
+
+
+            return paso;
+        }
 
         private static bool Insertar(Inscripciones entity)
         {
