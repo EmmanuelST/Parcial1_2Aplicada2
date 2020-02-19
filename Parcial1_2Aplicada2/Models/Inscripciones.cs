@@ -11,15 +11,16 @@ namespace Parcial1_2Aplicada2.Models
         [Key]
         public int InscripcionId { get; set; }
         [Required (ErrorMessage ="Es necesario definir un semestre")]
-        [StringLength(maximumLength:99,MinimumLength =5,ErrorMessage ="La cadena del semestre esta fuera de rango")]
+        [StringLength(maximumLength:7,MinimumLength =6,ErrorMessage ="La cadena del semestre esta fuera de rango")]
         public string Semestre { get; set; }
         [Required(ErrorMessage = "Es necesario definir un limite")]
-        [Range(typeof(int),minimum:"1",maximum:"100",ErrorMessage ="El limite esta fuera de rango")]
+        [Range(typeof(int),minimum:"6",maximum:"100",ErrorMessage ="El limite esta fuera de rango, es muy corto o largo")]
         public int Limite { get; set; }
         [Required(ErrorMessage = "Es necesario definir una cantidad de creditos tomados")]
         [Range(typeof(int), minimum: "1", maximum: "100", ErrorMessage = "La cantidad de creditos tomados esta fuera de rango")]
         public int Tomados { get; set; }
         [Required(ErrorMessage = "Es necesario definir una cantidad de creditos desponible")]
+        [Range(typeof(int), minimum: "0", maximum: "100", ErrorMessage = "La cantidad de creditos disponibles esta fuera de rango")]
         public int Disponibles { get; set; }
 
         public Inscripciones()
