@@ -30,6 +30,7 @@
                         <th scope="col">Creditos Tomados</th>
                         <th scope="col">Creditos Disponibles</th>
                         <th></th>
+                        <th></th>
                     </tr>
 
                 </thead>
@@ -37,14 +38,16 @@
                 <tbody>
                     @foreach (var obj in Lista)
                     {
-                    <tr>
-                        <td scope="row">@obj.InscripcionId</td>
-                        <td>@obj.Semestre</td>
-                        <td>@obj.Limite</td>
-                        <td>@obj.Tomados</td>
-                        <td>@obj.Disponibles</td>
-                        <td><button type="button" class="btn btn-sm btn-outline-danger" @onclick="(()=> Eliminar(obj.InscripcionId))">Eliminar</button></td>
-                    </tr>
+                        <tr>
+                            <td scope="row">@obj.InscripcionId</td>
+                            <td>@obj.Semestre</td>
+                            <td>@obj.Limite</td>
+                            <td>@obj.Tomados</td>
+                            <td>@obj.Disponibles</td>
+                            <td><a class="btn btn-sm btn-outline-primary" href="RInscripciones/@obj.InscripcionId">Editar</a></td>
+                            <td><button type="button" class="btn btn-sm btn-outline-danger" @onclick="(()=> Eliminar(obj.InscripcionId))">Eliminar</button></td>
+
+                        </tr>
                     }
 
 
@@ -91,7 +94,7 @@
     {
         try
         {
-            if(InscripcionesController.Eliminar(Id))
+            if (InscripcionesController.Eliminar(Id))
             {
                 CargarLista();
                 Mensaje = string.Empty;

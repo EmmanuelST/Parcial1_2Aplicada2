@@ -1,4 +1,4 @@
-﻿@page "/RInscripciones"
+﻿@page "/RInscripciones/{InscripcionId:int}"
 
 <div class="container">
     <h3 class="display-4 text-center">Registro de Inscripciones</h3>
@@ -59,14 +59,24 @@
 </div>
 
 @code { 
-
+    [Parameter]
+    public int InscripcionId { get; set; }
     public Inscripciones Inscripcion { get; set; }
     public string Mensaje { get; set; }
 
     protected override void OnInitialized()
     {
         Inscripcion = new Inscripciones();
+
+        if(InscripcionId >0 )
+        {
+            Inscripcion.InscripcionId = InscripcionId;
+            Buscar();
+        }
+        
     }
+
+
 
     private void CalcularDisponibles()
     {
