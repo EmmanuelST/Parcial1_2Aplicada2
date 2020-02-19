@@ -5,6 +5,7 @@
 <div class="container">
 
     <h3 class="display-4 text-center">Consulta de Inscripciones</h3>
+    <p class="text-muted">@Mensaje</p>
 
     <div>
 
@@ -28,6 +29,7 @@
                         <th scope="col">Limite de credito</th>
                         <th scope="col">Creditos Tomados</th>
                         <th scope="col">Creditos Disponibles</th>
+                        <th></th>
                     </tr>
 
                 </thead>
@@ -35,13 +37,14 @@
                 <tbody>
                     @foreach (var obj in Lista)
                     {
-                        <tr>
-                            <td scope="row">@obj.InscripcionId</td>
-                            <td>@obj.Semestre</td>
-                            <td>@obj.Limite</td>
-                            <td>@obj.Tomados</td>
-                            <td>@obj.Disponibles</td>
-                        </tr>
+                    <tr>
+                        <td scope="row">@obj.InscripcionId</td>
+                        <td>@obj.Semestre</td>
+                        <td>@obj.Limite</td>
+                        <td>@obj.Tomados</td>
+                        <td>@obj.Disponibles</td>
+                        <td><button type="button" class="btn btn-sm btn-outline-danger" @onclick="(()=> Eliminar(obj.InscripcionId))">Eliminar</button></td>
+                    </tr>
                     }
 
 
@@ -60,6 +63,7 @@
 
 
     public List<Inscripciones> Lista { get; set; }
+    public string Mensaje { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -67,15 +71,41 @@
 
         try
         {
-            await Task.Run(() => { Lista = InscripcionesController.GetList(A => true); });
+            await Task.Run(() => { CargarLista(); });
         }
         catch (Exception)
         {
 
-            throw;
+            Mensaje = "Hubo un Error!!";
         }
 
 
+    }
+
+    private void CargarLista()
+    {
+        Lista = InscripcionesController.GetList(A => true);
+    }
+
+    private void Eliminar(int Id)
+    {
+        try
+        {
+            if(InscripcionesController.Eliminar(Id))
+            {
+                CargarLista();
+                Mensaje = string.Empty;
+            }
+            else
+            {
+                Mensaje = "No se pudo eliminar";
+            }
+        }
+        catch (Exception)
+        {
+
+            Mensaje = "Hubo un Error!!";
+        }
     }
 
 }
